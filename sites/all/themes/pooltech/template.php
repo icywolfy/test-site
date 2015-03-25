@@ -58,6 +58,10 @@ function pooltech_preprocess_page(&$variables, $hook) {
   }
 }
 
+function pooltech_templates_preprocess(&$variables, $hook) { 
+  var_export($variables, $hook);
+}
+
 /**
  * Override or insert variables into the node templates.
  *
@@ -66,10 +70,9 @@ function pooltech_preprocess_page(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("node" in this case.)
  */
-/* -- Delete this line if you want to use this function
-function STARTERKIT_preprocess_node(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
-
+function pooltech_preprocess_node(&$variables, $hook) {
+//var_export($variables, $hook);
+dpm ($variables);
   // Optionally, run node-type-specific preprocess functions, like
   // STARTERKIT_preprocess_node_page() or STARTERKIT_preprocess_node_story().
   $function = __FUNCTION__ . '_' . $variables['node']->type;
@@ -130,3 +133,9 @@ function STARTERKIT_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
+
+function _pooltech_get_value($node, $fieldName) {
+  $items = field_get_items('node', $node, $fieldName);
+  $value = field_view_value('node', $node, $fieldName, $items[0]);
+  return $value;
+}
