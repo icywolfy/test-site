@@ -1,0 +1,7 @@
+{
+  "name" : "pooltech/pre-launch",
+  "require": {
+     "stripe/stripe-php": "2.*"
+   }
+}
+
