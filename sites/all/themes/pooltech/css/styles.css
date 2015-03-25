@@ -20,3 +20,19 @@
 /* SMACSS theme rules */
 /* @import "theme-A.css"; */
 /* @import "theme-B.css"; */
+
+.node-h-section-simple-content.view-mode-inlined_content {
+  position: relative;
+  min-height: 500px;
+}
+.node-h-section-simple-content.view-mode-inlined_content .section-splash-image {
+  max-height: 500px;
+  max-width: 500px;
+  overflow: hidden;
+  display: inline-block;
+  position: absolute;
+}
+.node-h-section-simple-content.view-mode-inlined_content .section-content {
+  margin-left: 50%;
+}
+
