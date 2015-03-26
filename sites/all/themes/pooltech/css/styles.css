@@ -21,18 +21,34 @@
 /* @import "theme-A.css"; */
 /* @import "theme-B.css"; */
 
-.node-h-section-simple-content.view-mode-inlined_content {
+.node-h-section-simple-content {
   position: relative;
   min-height: 500px;
 }
-.node-h-section-simple-content.view-mode-inlined_content .section-splash-image {
-  max-height: 500px;
+.node-h-section-simple-content img {
+  max-width: none;
+}
+.node-h-section-simple-content h2,
+.node-h-section-text-only h2
+{
+  line-height: 1.25em;  
+}
+
+.node-h-section-simple-content .section-splash-image {
+  max-height: 100%;
   max-width: 500px;
   overflow: hidden;
   display: inline-block;
   position: absolute;
 }
-.node-h-section-simple-content.view-mode-inlined_content .section-content {
+.node-h-section-text-only .section-content {
+  padding: 1em;
+}
+
+.node-h-section-simple-content .section-content {
+  padding-top: 1em;
+  padding-bottom: 1em;
   margin-left: 50%;
+  min-height: 500px;
 }
 

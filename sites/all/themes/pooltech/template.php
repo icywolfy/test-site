@@ -53,8 +53,8 @@ function STARTERKIT_preprocess_html(&$variables, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function pooltech_preprocess_page(&$variables, $hook) {
-  if (!empty($vars['node'])) {
-    $vars['theme_hook_suggestions'][] = 'page__' . $vars['node']->type;
+  if (!empty($variables['node'])) {
+    $variables['theme_hook_suggestions'][] = 'page__' . $variables['node']->type;
   }
 }
 
@@ -71,15 +71,56 @@ function pooltech_templates_preprocess(&$variables, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 function pooltech_preprocess_node(&$variables, $hook) {
-//var_export($variables, $hook);
-dpm ($variables);
   // Optionally, run node-type-specific preprocess functions, like
   // STARTERKIT_preprocess_node_page() or STARTERKIT_preprocess_node_story().
-  $function = __FUNCTION__ . '_' . $variables['node']->type;
-  if (function_exists($function)) {
-    $function($variables, $hook);
+dpm($variables);
+  if (!isset($variables['node']->view_mode)) { 
+    $variables['node']->view_mode = null;
+  }
+  $functionType = __FUNCTION__ . '_' . $variables['node']->type;
+  $functionTypeView = $functionType . '_' . ($variables['node']->view_mode ?: 'undefined');
+  
+  if (function_exists($functionTypeView)) {
+    $functionTypeView($variables, $hook);
+  } elseif (function_exists($functionType)) {
+    $functionType($variables, $hook);
   }
 }
+
+function _pooltech_preprocess_node_h_section_common(&$variables, $hook) {
+  $node = $variables['node'];
+
+  // CSS Color
+  $backgroundColor = _pooltech_get_value($node, 'field_background_color');
+  $contentColor = _pooltech_get_value($node, 'field_content_color');
+  $colorStyleRenders = array_filter(array('background-color' => render($backgroundColor), 'color' => render($contentColor)));
+  $colorStyle = array();
+  foreach ($colorStyleRenders as $key => $value) { 
+    $colorStyle[] = "$key: $value"; 
+  }
+  $colorStyle = implode(';', $colorStyle);
+  $variables['colorStyle'] = $colorStyle;
+
+  // Body Content
+  $body = _pooltech_get_value($node, 'body');
+  $variables['x_body'] = $body;
+
+  // Splash Image
+  $splashImage = _pooltech_get_value($node, 'field_splash_image');
+  if ($splashImage) {
+    $splashImage['#item']['attributes']['class'] = 'splash';
+    $variables['x_splashImage'] = $splashImage;
+  }
+}
+
+function pooltech_preprocess_node_h_section_simple_content(&$variables, $hook) {
+  _pooltech_preprocess_node_h_section_common($variables, $hook); 
+}
+
+function pooltech_preprocess_node_h_section_text_only(&$variables, $hook) {
+  _pooltech_preprocess_node_h_section_common($variables, $hook); 
+}
+
 // */
 
 /**

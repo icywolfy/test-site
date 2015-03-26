@@ -8,36 +8,28 @@
  */
 ?>
 <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <div class="section-color" style="<?php print $colorStyle ?>">
+  <div class="section-content">
   <?php if ($title_prefix || $title_suffix || $display_submitted || $unpublished || !$page && $title): ?>
     <header>
       <?php print render($title_prefix); ?>
       <?php if (!$page && $title): ?>
-        <h2<?php print $title_attributes; ?>><?php print $node_url; ?>"><?php print $title; ?></h2>
+        <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
-
-      <?php if ($display_submitted): ?>
-        <p class="submitted">
-          <?php print $user_picture; ?>
-          <?php print $submitted; ?>
-        </p>
-      <?php endif; ?>
+      <?php print render($x_body); ?>
 
       <?php if ($unpublished): ?>
         <mark class="unpublished"><?php print t('Unpublished'); ?></mark>
       <?php endif; ?>
     </header>
   <?php endif; ?>
-
+  </div>
   <?php
-    // We hide the comments and links now so that we can render them later.
     hide($content['comments']);
     hide($content['links']);
     print render($content);
   ?>
-
-  <?php print render($content['links']); ?>
-
-  <?php print render($content['comments']); ?>
-
+  </div>
 </article>
+
